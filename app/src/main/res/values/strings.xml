@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">LiteEmployee</string>
+    <string name="lbl_edit">Edit</string>
+</resources>
