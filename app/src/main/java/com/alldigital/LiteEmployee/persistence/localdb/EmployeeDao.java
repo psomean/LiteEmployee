@@ -18,6 +18,9 @@ public interface EmployeeDao {
     @Query("SELECT * from employee_table")
     List<EmployeeEntity> getAllEmployees();
 
-    @Query("SELECT * FROM employee_table WHERE id = :id ")
+    @Query("SELECT * FROM employee_table WHERE id = :id ORDER BY id ASC")
     EmployeeEntity getEmployee(String id);
+
+    @Query("SELECT * FROM employee_table ORDER BY id DESC LIMIT 1")
+    EmployeeEntity getTopEmployee();
 }

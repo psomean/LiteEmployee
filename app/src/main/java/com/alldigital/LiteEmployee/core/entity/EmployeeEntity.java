@@ -6,14 +6,16 @@ import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
+
 @Entity(tableName = "employee_table")
-public class EmployeeEntity {
+public class EmployeeEntity implements Serializable {
     @PrimaryKey
     @NotNull
     @ColumnInfo(name = "id")
     private int id;
-    @ColumnInfo(name = "avatar")
-    private String avatar;
+    @ColumnInfo(name = "avatar", typeAffinity = ColumnInfo.BLOB)
+    private byte[] avatar;
     @ColumnInfo(name = "fullName")
     private String fullName;
     @ColumnInfo(name = "phoneNumber")
@@ -27,11 +29,11 @@ public class EmployeeEntity {
         this.id = id;
     }
 
-    public String getAvatar() {
+    public byte[] getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
+    public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
     }
 

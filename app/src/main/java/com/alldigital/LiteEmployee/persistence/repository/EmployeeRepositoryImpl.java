@@ -1,6 +1,5 @@
 package com.alldigital.LiteEmployee.persistence.repository;
 
-import android.content.Context;
 import android.os.AsyncTask;
 
 import com.alldigital.LiteEmployee.core.entity.EmployeeEntity;
@@ -11,21 +10,16 @@ import com.alldigital.LiteEmployee.persistence.utils.ImageSaver;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
 public class EmployeeRepositoryImpl implements EmployeeRepository {
-    private ImageSaver mImageSaver;
     private EmployeeDao mEmployeeDao;
     private AsyncTask<String, Void, Void> mReadAsyncTask;
-    private List<EmployeeEntity> mAllEmployees;
 
     public EmployeeRepositoryImpl(LiteEmployeeDatabase database, ImageSaver imageSaver) {
         mEmployeeDao = database.employeeDao();
-        mAllEmployees = mEmployeeDao.getAllEmployees();
     }
     @Override
     public void getEmployeeList(@NotNull EmployeeListCallBack employeeListCallBack) {
-        employeeListCallBack.onEmployeesLoaded(mAllEmployees);
+        employeeListCallBack.onEmployeesLoaded(mEmployeeDao.getAllEmployees());
     }
 
     @Override
@@ -41,6 +35,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     @Override
     public void cancel() {
         if(mReadAsyncTask != null) mReadAsyncTask.cancel(true);
+    }
+
+    @Override
+    public void getTopEmployee(EmployeeEntityCallBack callBack) {
+        callBack.onEmployeeLoaded(mEmployeeDao.getTopEmployee());
     }
 
     private static class insertAsyncTask extends AsyncTask<EmployeeEntity, Void, Void> {
