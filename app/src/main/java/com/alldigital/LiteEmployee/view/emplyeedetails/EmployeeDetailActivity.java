@@ -83,15 +83,20 @@ public class EmployeeDetailActivity extends AppCompatActivity implements Employe
         entity.setFullName(eEmployeeName.getText().toString());
         entity.setPhoneNumber(ePhoneNumber.getText().toString());
 
-        if (mEntity != null) entity.setId(mEntity.getId());
+        if (mEntity != null) {
+            entity.setId(mEntity.getId());
+            presenter.saveEmployee(entity);
+        }
 
-        presenter.saveEmployee(entity);
-
-        Intent returnIntent = new Intent();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(KEY_EMPLOYEE, entity);
-        returnIntent.putExtras(bundle);
-        setResult(Activity.RESULT_OK,returnIntent);
+        if (mEntity != null) {
+            setResult(Activity.RESULT_CANCELED);
+        } else {
+            Intent returnIntent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(KEY_EMPLOYEE, entity);
+            returnIntent.putExtras(bundle);
+            setResult(Activity.RESULT_OK, returnIntent);
+        }
 
         finish();
     }

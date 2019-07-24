@@ -88,9 +88,7 @@ public class EmployeeListActivity extends AppCompatActivity implements EmployeeL
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != RESULT_OK) return;
-
-        if (requestCode == ADD_NEW_PROFILE_REQUEST) {
+        if (requestCode == ADD_NEW_PROFILE_REQUEST && resultCode == RESULT_OK) {
             // Make sure the request was successful
             Bundle bundle = data.getExtras();
             if (bundle != null) {
@@ -103,11 +101,11 @@ public class EmployeeListActivity extends AppCompatActivity implements EmployeeL
                     }
                 }
                 entity.setId(maxId + 1);
+                adapter.addEmployee(entity);
                 mPresenter.saveNewEmployee(entity);
-                mPresenter.init();
             }
 
-        } else if (requestCode == UPDATE_PROFILE_REQUEST) {
+        }  else {
             mPresenter.init();
         }
     }
